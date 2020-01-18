@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Succable : MonoBehaviour
 {
+    public bool isEdiable = true;
     Vector2 yzPos;
 
     void Start()
@@ -31,7 +32,7 @@ public class Succable : MonoBehaviour
 
         if (isPlayerFacingLeft && transform.position.x < xPos)
         {
-            if (xDist > -1.49f)
+            if (xDist > -1.49f && isEdiable)
             {
                 SetYZ();
                 succModule.DepositSucc(this, columnIndex);
@@ -44,7 +45,7 @@ public class Succable : MonoBehaviour
         }
         else if (!isPlayerFacingLeft && transform.position.x > xPos)
         {
-            if (xDist < 1.49f)
+            if (xDist < 1.49f && isEdiable)
             {
                 SetYZ();
                 succModule.DepositSucc(this, columnIndex);

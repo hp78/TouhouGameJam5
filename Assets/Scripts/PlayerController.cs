@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public float jumpThreshold;
 
     public bool inAir;
+    bool isSuccing = false;
     private bool isAttacking;
 
     public Rigidbody2D rigidbody2d;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem unsuck2effect;
 
     [Space(5)]
-    public SpriteRenderer sRender;
+    public GameObject spriteBody;
     public Sprite still;
     public Sprite succ;
 
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isPlayerSuccing.val)
+        if(isSuccing)
         {
             SuckEffect();
         }
@@ -66,25 +67,32 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
+        if(isPlayerSuccing.val == true)
+        {
+            isSuccing = true;
+            return;
+        }
+
         movement = rigidbody2d.velocity;
         movement.x = Input.GetAxis("Horizontal") * moveForce;
 
         if(movement.x < 0)
         {
             isPlayerFacingLeft.val = true;
-            sRender.transform.localScale = new Vector3(1, sRender.transform.localScale.y, sRender.transform.localScale.z);
+            spriteBody.transform.localScale = new Vector3(1, spriteBody.transform.localScale.y, spriteBody.transform.localScale.z);
             succEffects.transform.localScale = new Vector3(-1, succEffects.transform.localScale.y, succEffects.transform.localScale.z);
             anim.SetBool("IsFacingLeft", true);
         }
         else if(movement.x > 0)
         {
             isPlayerFacingLeft.val = false;
-            sRender.transform.localScale = new Vector3(-1, sRender.transform.localScale.y, sRender.transform.localScale.z);
+            spriteBody.transform.localScale = new Vector3(-1, spriteBody.transform.localScale.y, spriteBody.transform.localScale.z);
             succEffects.transform.localScale = new Vector3(1, succEffects.transform.localScale.y, succEffects.transform.localScale.z);
             anim.SetBool("IsFacingLeft", false);
         }
 
         anim.SetFloat("XVelocity", movement.x);
+        anim.SetFloat("YVelocity", movement.y);
 
         rigidbody2d.velocity = movement;
     }
@@ -93,46 +101,51 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x + 0.5f, transform.position.y), Vector2.down, jumpThreshold, layermask);
         RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(transform.position.x - 0.5f, transform.position.y), Vector2.down, jumpThreshold, layermask);
-        Gizmos.color = Color.cyan;
+        //Gizmos.color = Color.cyan;
+
         if (hit || hit2)
         {
             inAir = false;
+            anim.SetTrigger("TriggerLand");
 
-            Debug.DrawLine(new Vector2(transform.position.x + 0.5f, transform.position.y), hit.point, Color.cyan);
-            Debug.DrawLine(new Vector2(transform.position.x - 0.5f, transform.position.y), hit2.point, Color.cyan);
+            //Debug.DrawLine(new Vector2(transform.position.x + 0.5f, transform.position.y), hit.point, Color.cyan);
+            //Debug.DrawLine(new Vector2(transform.position.x - 0.5f, transform.position.y), hit2.point, Color.cyan);
         }
         else
         {
             inAir = true;
         }
-
-        if (Input.GetKeyDown(KeyCode.Z) && !inAir)
+        
+        if (!inAir &&Input.GetKeyDown(KeyCode.Z))
         {
             rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, jumpForce);
             anim.SetTrigger("TriggerJump");
         }
+
+
     }
 
     void SuckEffect()
     {
-        if (Input.GetKey(KeyCode.X))
-        {
-            //sRender.sprite = succ;
-            suck1effect.Play();
-            suck2effect.Play();
-            anim.SetBool("IsSuccing", true);
-        }
-        else if(Input.GetKey(KeyCode.C))
-        {
-            //sRender.sprite = succ;
-            unsuck1effect.Play();
-            unsuck2effect.Play();
-            anim.SetBool("IsSuccing", true);
-        }
-        else
+        if (!isPlayerSuccing.val)
         {
             //sRender.sprite = still;
             anim.SetBool("IsSuccing", false);
+            isSuccing = false;
+        }
+        else if (Input.GetKey(KeyCode.X))
+        {
+                //sRender.sprite = succ;
+                suck1effect.Play();
+                suck2effect.Play();
+                anim.SetBool("IsSuccing", true);
+        }
+        else if (Input.GetKey(KeyCode.C))
+        {
+                //sRender.sprite = succ;
+                unsuck1effect.Play();
+                unsuck2effect.Play();
+                anim.SetBool("IsSuccing", true);
         }
     }
 }

@@ -70,13 +70,19 @@ public class SuccModule : MonoBehaviour
         }
 
         //
-        if (isSucc && CanSucc())
+        if (isSucc)
         {
-            DoSucc(Time.deltaTime);
+            if(CanSucc())
+                DoSucc(Time.deltaTime);
+            else
+                ToggleSucc(false);
         }
-        else if(isUnsucc && CanUnsucc())
+        else if(isUnsucc)
         {
-            DoUnsucc(Time.deltaTime);
+            if (CanUnsucc())
+                DoUnsucc(Time.deltaTime);
+            else
+                ToggleUnsucc(false);
         }
     }
 
