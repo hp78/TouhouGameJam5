@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 28d6acec87c8f3c4eb1b0c779fe17082
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - isPlayerSuccing: {fileID: 11400000, guid: 308a518564bada94d8b544094659c523, type: 2}
+  - isGamePaused: {fileID: 11400000, guid: 524ebda08f0160243a2ef7862160639f, type: 2}
+  - isPlayerFacingLeft: {fileID: 11400000, guid: cabc791cc8ab0444d86e8b9c93a3b86e,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
