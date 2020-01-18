@@ -42,7 +42,7 @@ public class Succable : MonoBehaviour
                 transform.position = transform.position + new Vector3(1.0f, 0);
             }
         }
-        else if (transform.position.x > xPos)
+        else if (!isPlayerFacingLeft && transform.position.x > xPos)
         {
             if (xDist < 1.49f)
             {
@@ -66,7 +66,7 @@ public class Succable : MonoBehaviour
         {
             transform.position = transform.position - new Vector3(1.0f, 0);
         }
-        else if (transform.position.x > xPos)
+        else if (!isPlayerFacingLeft && transform.position.x > xPos)
         {
             transform.position = transform.position + new Vector3(1.0f, 0);
         }
