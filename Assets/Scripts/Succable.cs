@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Succable : MonoBehaviour
 {
-    public bool isEdiable = true;
+    public bool isEdible = true;
     Vector2 yzPos;
 
     void Start()
