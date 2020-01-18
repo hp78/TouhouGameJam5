@@ -1,0 +1,10 @@
+diff a/Assets/Scripts/PlayerController.cs b/Assets/Scripts/PlayerController.cs	(rejected hunks)
+@@ -60,7 +60,7 @@
+     {
+         RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x + 0.5f, transform.position.y), Vector2.down, jumpThreshold, layermask);
+         RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(transform.position.x - 0.5f, transform.position.y), Vector2.down, jumpThreshold, layermask);
+-        Gizmos.color = Color.cyan;
++       
+         if (hit || hit2)
+         {
+             inAir = false;
