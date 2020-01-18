@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Succables : MonoBehaviour
+public class Succable : MonoBehaviour
 {
+    Vector2 yzPos;
+
+    void Start()
+    {
+        yzPos = new Vector2();
+    }
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -24,9 +31,10 @@ public class Succables : MonoBehaviour
 
         if (isPlayerFacingLeft && transform.position.x < xPos)
         {
-            if (xDist > -1.0f)
+            if (xDist > -1.49f)
             {
-                succModule.DepositSucc(gameObject, columnIndex);
+                SetYZ();
+                succModule.DepositSucc(this, columnIndex);
                 gameObject.SetActive(false);
             }
             else
@@ -36,9 +44,10 @@ public class Succables : MonoBehaviour
         }
         else if (transform.position.x > xPos)
         {
-            if (xDist < 1.0f)
+            if (xDist < 1.49f)
             {
-                succModule.DepositSucc(gameObject, columnIndex);
+                SetYZ();
+                succModule.DepositSucc(this, columnIndex);
                 gameObject.SetActive(false);
             }
             else
@@ -61,5 +70,30 @@ public class Succables : MonoBehaviour
         {
             transform.position = transform.position + new Vector3(1.0f, 0);
         }
+    }
+
+    public void SetYZ()
+    {
+        yzPos = new Vector2(transform.position.y, transform.position.z);
+    }
+
+    public void SetYZ(float y, float z)
+    {
+        yzPos = new Vector2(y, z);
+    }
+
+    public float GetYPos()
+    {
+        return yzPos.x;
+    }
+
+    public float GetZPos()
+    {
+        return yzPos.y;
+    }
+
+    public void ResumeYZPos()
+    {
+        transform.position = new Vector3(transform.position.x, yzPos.x, yzPos.y);
     }
 }

@@ -18,8 +18,8 @@ public class SuccModule : MonoBehaviour
     public BoolVal isGamePaused;
     public BoolVal isPlayerFacingLeft;
 
-    public float succOffset = 1.0f;
-    public float succDelay = 0.5f;
+    public float succOffset = 1.5f;
+    public float succDelay = 0.2f;
     public float currSucc = 0.0f;
 
     bool isSucc = false;
@@ -27,15 +27,15 @@ public class SuccModule : MonoBehaviour
     int succCapacity = 10;
     public int currSuccCapacity = 0;
 
-    List<List<GameObject>> succList;
+    List<List<Succable>> succList;
 
     // Start is called before the first frame update
     void Start()
     {
-        succList = new List<List<GameObject>>();
+        succList = new List<List<Succable>>();
         for(int i = 0; i < 10; ++i)
         {
-            succList.Add(new List<GameObject>());
+            succList.Add(new List<Succable>());
         }
     }
 
@@ -70,7 +70,7 @@ public class SuccModule : MonoBehaviour
         }
 
         //
-        if (isSucc && CanStillSucc())
+        if (isSucc && CanSucc())
         {
             DoSucc(Time.deltaTime);
         }
@@ -80,6 +80,7 @@ public class SuccModule : MonoBehaviour
         }
     }
 
+    //
     void ToggleSucc(bool isStartSucc)
     {
         isSucc = isStartSucc;
@@ -87,6 +88,7 @@ public class SuccModule : MonoBehaviour
         currSucc = 0.0f;
     }
 
+    //
     void ToggleUnsucc(bool isStartSucc)
     {
         isUnsucc = isStartSucc;
@@ -94,6 +96,7 @@ public class SuccModule : MonoBehaviour
         currSucc = 0.0f;
     }
 
+    //
     void DoSucc(float deltaTime)
     {
         currSucc += deltaTime;
@@ -105,6 +108,7 @@ public class SuccModule : MonoBehaviour
         }
     }
 
+    //
     void DoUnsucc(float deltaTime)
     {
         currSucc += deltaTime;
@@ -116,6 +120,7 @@ public class SuccModule : MonoBehaviour
         }
     }
 
+    //
     void SuccColumn()
     {
         float offset = succOffset;
@@ -124,10 +129,11 @@ public class SuccModule : MonoBehaviour
             offset *= -1;
         }
 
-        evntSuccColumn?.Invoke(SnapTo(transform.position.x, 1.0f) + offset, currSuccCapacity, isPlayerFacingLeft.val,this);
+        evntSuccColumn?.Invoke(transform.position.x + offset, currSuccCapacity, isPlayerFacingLeft.val,this);
         ++currSuccCapacity;
     }
 
+    //
     void UnsuccColumn()
     {
         float offset = succOffset;
@@ -137,36 +143,39 @@ public class SuccModule : MonoBehaviour
         }
 
         --currSuccCapacity;
-        evntUnsuccColumn?.Invoke(SnapTo(transform.position.x, 1.0f) + offset, currSuccCapacity, isPlayerFacingLeft.val,this);
+        evntUnsuccColumn?.Invoke(transform.position.x + offset, currSuccCapacity, isPlayerFacingLeft.val,this);
         WithdrawSucc();
     }
 
-    public void DepositSucc(GameObject go, int index)
+    //
+    public void DepositSucc(Succable succ, int index)
     {
-        succList[index].Add(go);
+        succList[index].Add(succ);
     }
 
+    //
     public void WithdrawSucc()
     {
         //
-        float offset = succOffset;
+        float offset = succOffset + 1.0f;
         if (isPlayerFacingLeft.val)
         {
             offset *= -1;
         }
 
         //
-        foreach (GameObject go in succList[currSuccCapacity])
+        foreach (Succable succ in succList[currSuccCapacity])
         {
-            go.SetActive(true);
+            succ.gameObject.SetActive(true);
             float xPos = SnapTo(transform.position.x, 1.0f) + offset;
-            go.transform.position = new Vector3(xPos, transform.position.y, transform.position.z);
+            succ.transform.position = new Vector3(xPos, succ.GetYPos(), succ.GetZPos());
         }
 
         succList[currSuccCapacity].Clear();
     }
 
-    bool CanStillSucc()
+    //
+    bool CanSucc()
     {
         return (currSuccCapacity < succCapacity);
     }

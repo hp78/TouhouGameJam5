@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     public ParticleSystem suck1effect;
     public ParticleSystem suck2effect;
+    public ParticleSystem suck3effect;
 
     public SpriteRenderer sRender;
     public Sprite still;
@@ -88,8 +89,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.X))
         {
             sRender.sprite = succ;
-            suck1effect.Play();
+            //suck1effect.Play();
             suck2effect.Play();
+        }
+        else if(Input.GetKey(KeyCode.C))
+        {
+            sRender.sprite = succ;
+            suck3effect.Play();
         }
         else
         sRender.sprite = still;
