@@ -24,6 +24,7 @@ public class MeiLingBoss : MonoBehaviour
     public float jumpForce;
 
     public Rigidbody2D rigidbody2d;
+    public Animator anim;
     public Vector3 movement;
 
 
@@ -31,9 +32,19 @@ public class MeiLingBoss : MonoBehaviour
     public float jumpThreshold;
     private int layermask;
     public SpriteRenderer spriteRenderer;
+    public GameObject tails;
 
     public Transform laserPrefab;
     public Transform bulletPrefab;
+
+    public ParticleSystem laserChargeParticle;
+    public ParticleSystem laserFire;
+    public ParticleSystem channel;
+
+
+    public Sprite idle;
+    public Sprite charging;
+    public Sprite spin;
 
     float bounceTime;
     float idleTime;
@@ -84,6 +95,7 @@ public class MeiLingBoss : MonoBehaviour
 
     void BouncePhase()
     {
+
         Movement();
         Hopping();
         if (bounceTime < 0.0f)
@@ -96,6 +108,7 @@ public class MeiLingBoss : MonoBehaviour
             {
                 prevState = currState = MeiState.LASER;
             }
+            anim.CrossFade("MeilingIdle", .3f);
 
             rigidbody2d.velocity = new Vector2 (0f,0f);
             rigidbody2d.gravityScale = 0f;
@@ -109,6 +122,9 @@ public class MeiLingBoss : MonoBehaviour
         idleTime -= Time.deltaTime;
         if(idleTime<0.0f)
         {
+            spriteRenderer.sprite = spin;
+            tails.SetActive(false);
+            anim.Play("MeilingSpin");
             currState = MeiState.BOUNCE;
             rigidbody2d.gravityScale = 2.5f;
             bounceTime = 5f;
@@ -159,9 +175,14 @@ public class MeiLingBoss : MonoBehaviour
     IEnumerator MikoLazers()
     {
 
+        spriteRenderer.sprite = idle;
+        tails.SetActive(true);
         currState = MeiState.IDLE;
         idleTime = 6f;
         yield return new WaitForSeconds(1.5f);
+        spriteRenderer.sprite = charging;
+        laserChargeParticle.Play();
+
         while (transform.position.y < 6.5f)
         {
             transform.position= Vector2.MoveTowards(transform.position, transform.position + new Vector3(0f, 6.5f, 0f), 1f*Time.deltaTime);
@@ -177,15 +198,21 @@ public class MeiLingBoss : MonoBehaviour
 
             yield return new WaitForSeconds(0.03f);
         }
+        laserFire.Play();
 
         yield return 0;
     }
 
     IEnumerator MikoBullets()
     {
+        spriteRenderer.sprite = idle;
+        tails.SetActive(true);
+
         currState = MeiState.IDLE;
         idleTime = 6f;
         yield return new WaitForSeconds(.5f);
+        spriteRenderer.sprite = charging;
+        channel.Play();
         while (transform.position.y < 5.5f)
         {
             transform.position = Vector2.MoveTowards(transform.position, transform.position + new Vector3(0f, 5.5f, 0f), 1f * Time.deltaTime);
