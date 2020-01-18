@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 72ff3d008f441b64e9b9e27c0e3b5a18
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - isPlayerSuccing: {fileID: 11400000, guid: 308a518564bada94d8b544094659c523, type: 2}
+  - isGamePaused: {fileID: 11400000, guid: 524ebda08f0160243a2ef7862160639f, type: 2}
+  - isPlayerFacingLeft: {fileID: 11400000, guid: cabc791cc8ab0444d86e8b9c93a3b86e,
+      type: 2}
+  - succEffects: {instanceID: 0}
+  - rigidbody2d: {instanceID: 0}
+  - suck1effect: {instanceID: 0}
+  - suck2effect: {instanceID: 0}
+  - unsuck1effect: {instanceID: 0}
+  - unsuck2effect: {instanceID: 0}
+  - spriteBody: {instanceID: 0}
+  - still: {instanceID: 0}
+  - succ: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

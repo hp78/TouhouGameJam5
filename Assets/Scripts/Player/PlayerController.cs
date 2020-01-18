@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public delegate void DeleUpdateHealth(int health);
+    public static event DeleUpdateHealth evntUpdateHealth;
+
     [Space(5)]
     public BoolVal isPlayerSuccing;
     public BoolVal isGamePaused;

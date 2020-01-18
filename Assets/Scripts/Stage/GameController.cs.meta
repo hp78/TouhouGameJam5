@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f82565f7d62d90d48b48de2e308cc599
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - isGamePaused: {fileID: 11400000, guid: 524ebda08f0160243a2ef7862160639f, type: 2}
+  - isPlayerAlive: {fileID: 11400000, guid: a7da1d4569a9cd644b34983a9b95d879, type: 2}
+  - isPlayerInControl: {fileID: 11400000, guid: 7f013bcb6390a9445a8a80055e676d21,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

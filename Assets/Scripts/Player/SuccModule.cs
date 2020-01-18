@@ -12,6 +12,9 @@ public class SuccModule : MonoBehaviour
     public delegate void DeleUnsuccColumn(float xPos, int columnIndex, bool playerFacing, SuccModule source);
     public static event DeleUnsuccColumn evntUnsuccColumn;
 
+    public delegate void DeleUpdateSuccCount(int succCount);
+    public static event DeleUpdateSuccCount evntUpdateSuccCount;
+
     #endregion
 
     public BoolVal isPlayerSuccing;
@@ -136,6 +139,7 @@ public class SuccModule : MonoBehaviour
         }
 
         evntSuccColumn?.Invoke(transform.position.x + offset, currSuccCapacity, isPlayerFacingLeft.val,this);
+        evntUpdateSuccCount?.Invoke(currSuccCapacity);
         ++currSuccCapacity;
     }
 
@@ -150,6 +154,7 @@ public class SuccModule : MonoBehaviour
 
         --currSuccCapacity;
         evntUnsuccColumn?.Invoke(transform.position.x + offset, currSuccCapacity, isPlayerFacingLeft.val,this);
+        evntUpdateSuccCount?.Invoke(currSuccCapacity);
         WithdrawSucc();
     }
 
