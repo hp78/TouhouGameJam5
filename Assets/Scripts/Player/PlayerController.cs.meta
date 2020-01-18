@@ -8,6 +8,9 @@ MonoImporter:
   - isGamePaused: {fileID: 11400000, guid: 524ebda08f0160243a2ef7862160639f, type: 2}
   - isPlayerFacingLeft: {fileID: 11400000, guid: cabc791cc8ab0444d86e8b9c93a3b86e,
       type: 2}
+  - isPlayerAlive: {fileID: 11400000, guid: a7da1d4569a9cd644b34983a9b95d879, type: 2}
+  - isPlayerInControl: {fileID: 11400000, guid: 7f013bcb6390a9445a8a80055e676d21,
+      type: 2}
   - succEffects: {instanceID: 0}
   - rigidbody2d: {instanceID: 0}
   - suck1effect: {instanceID: 0}

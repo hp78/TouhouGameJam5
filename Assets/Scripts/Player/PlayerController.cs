@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public BoolVal isPlayerSuccing;
     public BoolVal isGamePaused;
     public BoolVal isPlayerFacingLeft;
+    public BoolVal isPlayerAlive;
+    public BoolVal isPlayerInControl;
 
     [Space(5)]
     Animator anim;
@@ -26,7 +28,8 @@ public class PlayerController : MonoBehaviour
 
     public bool inAir;
     bool isSuccing = false;
-    private bool isAttacking;
+    bool isAttacking = false;
+    int currHealth = 3;
 
     public Rigidbody2D rigidbody2d;
     public Vector3 movement;
@@ -49,6 +52,8 @@ public class PlayerController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rigidbody2d = GetComponent<Rigidbody2D>();
+        currHealth = 3;
+
         layermask = (1 << 8); //Player
         layermask |= (1 << 9);//enemy
         layermask |= (1 << 10);//camera
@@ -58,6 +63,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isPlayerAlive.val || isGamePaused.val || !isPlayerInControl) return;
+
         if(isSuccing)
         {
             SuckEffect();
@@ -151,5 +158,30 @@ public class PlayerController : MonoBehaviour
                 unsuck2effect.Play();
                 anim.SetBool("IsSuccing", true);
         }
+
     }
+
+    public void DamagePlayer()
+    {
+        --currHealth;
+
+        if(currHealth < 1)
+        {
+            isPlayerAlive.val = false;
+        }
+        evntUpdateHealth?.Invoke(currHealth);
+    }
+
+    public void HealPlayer()
+    {
+        ++currHealth;
+
+        if (currHealth > 3)
+        {
+            currHealth = 3;
+        }
+        evntUpdateHealth?.Invoke(currHealth);
+    }
+
 }
+
