@@ -87,6 +87,10 @@ public class PlayerController : MonoBehaviour
         if(isPlayerSuccing.val == true)
         {
             isSuccing = true;
+            movement = rigidbody2d.velocity;
+            movement.x = 0;
+            rigidbody2d.velocity = movement;
+
             return;
         }
 

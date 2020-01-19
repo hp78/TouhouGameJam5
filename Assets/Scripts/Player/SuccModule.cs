@@ -12,7 +12,7 @@ public class SuccModule : MonoBehaviour
     public delegate void DeleUnsuccColumn(float xPos, int columnIndex, bool playerFacing, SuccModule source);
     public static event DeleUnsuccColumn evntUnsuccColumn;
 
-    public delegate void DeleUpdateSuccCount(int succCount);
+    public delegate void DeleUpdateSuccCount(int succCount, bool isSucc);
     public static event DeleUpdateSuccCount evntUpdateSuccCount;
 
     #endregion
@@ -49,36 +49,18 @@ public class SuccModule : MonoBehaviour
         if (isGamePaused.val) return;
 
         //
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            ToggleSucc(true);
-        }
-
-        //
-        if (Input.GetKeyUp(KeyCode.X))
-        {
-            ToggleSucc(false);
-        }
-
-        //
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            ToggleUnsucc(true);
-        }
-
-        //
-        if (Input.GetKeyUp(KeyCode.C))
-        {
-            ToggleUnsucc(false);
-        }
-
-        //
         if (isSucc)
         {
             if(CanSucc())
                 DoSucc(Time.deltaTime);
             else
                 ToggleSucc(false);
+
+            //
+            if (Input.GetKeyUp(KeyCode.X))
+            {
+                ToggleSucc(false);
+            }
         }
         else if(isUnsucc)
         {
@@ -86,6 +68,26 @@ public class SuccModule : MonoBehaviour
                 DoUnsucc(Time.deltaTime);
             else
                 ToggleUnsucc(false);
+
+            //
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                ToggleUnsucc(false);
+            }
+        }
+        else
+        {
+            //
+            if (Input.GetKey(KeyCode.X))
+            {
+                ToggleSucc(true);
+            }
+
+            //
+            else if (Input.GetKey(KeyCode.C))
+            {
+                ToggleUnsucc(true);
+            }
         }
     }
 
@@ -139,7 +141,7 @@ public class SuccModule : MonoBehaviour
         }
 
         evntSuccColumn?.Invoke(transform.position.x + offset, currSuccCapacity, isPlayerFacingLeft.val,this);
-        evntUpdateSuccCount?.Invoke(currSuccCapacity);
+        evntUpdateSuccCount?.Invoke(currSuccCapacity, true);
         ++currSuccCapacity;
     }
 
@@ -154,7 +156,7 @@ public class SuccModule : MonoBehaviour
 
         --currSuccCapacity;
         evntUnsuccColumn?.Invoke(transform.position.x + offset, currSuccCapacity, isPlayerFacingLeft.val,this);
-        evntUpdateSuccCount?.Invoke(currSuccCapacity);
+        evntUpdateSuccCount?.Invoke(currSuccCapacity,false);
         WithdrawSucc();
     }
 

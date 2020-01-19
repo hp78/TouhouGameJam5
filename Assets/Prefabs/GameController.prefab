@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LookaheadTime: 0.2
+  m_LookaheadTime: 0.25
   m_LookaheadSmoothing: 15
   m_LookaheadIgnoreY: 1
   m_XDamping: 1
@@ -2409,6 +2409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82565f7d62d90d48b48de2e308cc599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageNames: {fileID: 11400000, guid: dca0914396adaea40ad11b800bb5ae9a, type: 2}
+  currStageIndex: {fileID: 11400000, guid: caa5c29e6872f874f98b19c299debb80, type: 2}
   nextSceneName: Stage1-1
   isGamePaused: {fileID: 11400000, guid: 524ebda08f0160243a2ef7862160639f, type: 2}
   isPlayerAlive: {fileID: 11400000, guid: a7da1d4569a9cd644b34983a9b95d879, type: 2}

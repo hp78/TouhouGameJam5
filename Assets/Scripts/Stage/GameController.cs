@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     //
-    public string nextSceneName;
+    public StringSet stageNames;
+    public IntVal currStageIndex;
 
     //
     public static GameController instance; 
@@ -92,9 +93,27 @@ public class GameController : MonoBehaviour
     }
 
     //
+    public void RetryScene()
+    {
+        SceneManager.LoadScene(stageNames.values[currStageIndex.val]);
+    }
+
+    //
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(nextSceneName);
+        string nextStageName = "MainMenu";
+        ++currStageIndex.val;
+        if ((currStageIndex.val) < stageNames.values.Length)
+        {
+            nextStageName = stageNames.values[currStageIndex.val];
+        }
+
+        SceneManager.LoadScene(nextStageName);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
 
@@ -111,8 +130,11 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void UpdateSuccCount(int nSuccCount)
+    void UpdateSuccCount(int nSuccCount, bool isSucc)
     {
+        if (isSucc)
+            nSuccCount += 1;
+
         for (int i = 0; i < nSuccCount; ++i)
         {
             succspaceImage[i].color = Color.white;
