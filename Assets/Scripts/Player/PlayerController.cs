@@ -116,6 +116,12 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("YVelocity", movement.y);
 
         rigidbody2d.velocity = movement;
+
+        if (transform.position.y < -5.0f)
+        {
+            currHealth = 0;
+            DamagePlayer();
+        }
     }
 
     void Jump()

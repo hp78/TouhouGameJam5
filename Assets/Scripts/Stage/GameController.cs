@@ -102,6 +102,20 @@ public class GameController : MonoBehaviour
         StageStart();
     }
 
+    IEnumerator ReloadScene()
+    {
+        float currAlpha = 0.0f;
+        Time.timeScale = 0.0f;
+
+        while (currAlpha < 1.0f)
+        {
+            currAlpha += Time.unscaledDeltaTime;
+            blackout.color = new Color(0, 0, 0, currAlpha);
+            yield return null;
+        }
+        RetryScene();
+    }
+
     IEnumerator LoadIntoNextScene()
     {
         float currAlpha = 0.0f;
@@ -143,14 +157,21 @@ public class GameController : MonoBehaviour
 
     void UpdateHealth(int nHealth)
     {
-        for(int i = 0; i < nHealth; ++i)
+        if (nHealth < 1)
         {
-            heartsImage[i].color = Color.white;
+            StartCoroutine(ReloadScene());
         }
-
-        for (int i = nHealth; i < heartsImage.Length; ++i)
+        else
         {
-            heartsImage[i].color = Color.black;
+            for (int i = 0; i < nHealth; ++i)
+            {
+                heartsImage[i].color = Color.white;
+            }
+
+            for (int i = nHealth; i < heartsImage.Length; ++i)
+            {
+                heartsImage[i].color = Color.black;
+            }
         }
     }
 

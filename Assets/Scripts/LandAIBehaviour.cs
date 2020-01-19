@@ -78,5 +78,4 @@ public class LandAIBehaviour : MonoBehaviour {
         if (obj.transform.tag == "MainCamera")
             active = true;
     }
-
 }

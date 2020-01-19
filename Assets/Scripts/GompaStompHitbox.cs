@@ -39,6 +39,10 @@ public class GompaStompHitbox : MonoBehaviour
                 anim.Play("Death");
                 Destroy(obj.gameObject, 3f);
             }
+            else
+            {
+                collision.gameObject.GetComponent<PlayerController>().DamagePlayer();
+            }
         }
     }
 }
