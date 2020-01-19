@@ -41,6 +41,7 @@ public class MeiLingBoss : MonoBehaviour
     public ParticleSystem laserFire;
     public ParticleSystem channel;
 
+    public Transform goal;
 
     public Sprite idle;
     public Sprite charging;
@@ -48,6 +49,7 @@ public class MeiLingBoss : MonoBehaviour
 
     float bounceTime;
     float idleTime;
+    bool dead=false;
 
     float invulFrameMax = 0.5f;
     float currInvulframe = 0.0f;
@@ -59,8 +61,13 @@ public class MeiLingBoss : MonoBehaviour
     {
 
         rigidbody2d = this.GetComponent<Rigidbody2D>();
-
-        currState = MeiState.BOUNCE;
+       // JSAM.AudioManager.instance.PlayMusic("China");
+        currState = MeiState.IDLE;
+        anim.Play("MeilingIdle");
+        spriteRenderer.sprite = charging;
+        
+        rigidbody2d.gravityScale = 0f;
+        idleTime = 3f;
         prevState = MeiState.LASER;
         bounceTime = 5f;
        // active = false;
@@ -91,6 +98,8 @@ public class MeiLingBoss : MonoBehaviour
                 BouncePhase();
                 break;
             case MeiState.DEAD:
+                if (!dead)
+                    StartCoroutine(PlayDead());
                 break;
         }
 
@@ -251,6 +260,10 @@ public class MeiLingBoss : MonoBehaviour
         currInvulframe = 0.0f;
         isInvul = true;
 
+        --bosslife;
+        if (bosslife <= 0)
+            currState = MeiState.DEAD;
+
         while (currInvulframe < invulFrameMax)
         {
             spriteRenderer.color = Color.red;
@@ -267,9 +280,7 @@ public class MeiLingBoss : MonoBehaviour
         }
 
         spriteRenderer.color = Color.white;
-        --bosslife;
-        if (bosslife < 0)
-            currState = MeiState.DEAD;
+
         isInvul = false;
     }
 
@@ -290,6 +301,25 @@ public class MeiLingBoss : MonoBehaviour
             if (collision.transform.position.y - 1.2f < transform.position.y)
                 collision.GetComponent<PlayerController>().DamagePlayer();
         }
+    }
+
+    IEnumerator PlayDead()
+    {
+
+        rigidbody2d.velocity = new Vector2(0f, 0f);
+        rigidbody2d.gravityScale = 0f;
+        dead = true;
+        GetComponent<Collider2D>().enabled = false;
+        tails.SetActive(true);
+        spriteRenderer.sprite = charging;
+        anim.Play("MeilingDead");
+        while (goal.position.y > 2f)
+        {
+            goal.position = Vector2.MoveTowards(goal.position, goal.position + new Vector3(0f, -1f, 0f), 1f * Time.deltaTime);
+            yield return null;
+
+        }
+
     }
 
 

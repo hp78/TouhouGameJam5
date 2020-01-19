@@ -36,9 +36,11 @@ public class MikoBoss : MonoBehaviour
 
     public Transform tablePrefab;
     public Transform RanBullet;
+    public Transform goal;
 
     public Animator cam;
     int prevNumber;
+    bool dead = false;
 
 
     float invulFrameMax = 1f;
@@ -89,6 +91,11 @@ public class MikoBoss : MonoBehaviour
 
                 break;
             case MikoState.DEAD:
+                if (!dead)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(PlayDead());
+                }
                 break;
         }
 
@@ -211,7 +218,7 @@ public class MikoBoss : MonoBehaviour
         }
         reached = false;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         animator.Play("MikoTable");
 
@@ -231,7 +238,7 @@ public class MikoBoss : MonoBehaviour
         }
         animator.CrossFade("MikoIdle", 0.1f);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         if (currState != MikoState.DEAD)
             currState = MikoState.SPIN;
         yield return 0;
@@ -274,6 +281,9 @@ public class MikoBoss : MonoBehaviour
     {
         currInvulframe = 0.0f;
         isInvul = true;
+        --bosslife;
+        if (bosslife <= 0)
+            currState = MikoState.DEAD;
 
         while (currInvulframe < invulFrameMax)
         {
@@ -291,10 +301,25 @@ public class MikoBoss : MonoBehaviour
         }
 
         spriteRenderer.color = Color.white;
-        --bosslife;
-        if (bosslife < 0)
-            currState = MikoState.DEAD;
+
         isInvul = false;
     }
 
+
+    IEnumerator PlayDead()
+    {
+
+
+        dead = true;
+        GetComponent<Collider2D>().enabled = false;
+        goal.gameObject.SetActive(true);
+        animator.Play("MikoDead");
+        while (goal.position.y > 2f)
+        {
+            goal.position = Vector2.MoveTowards(goal.position, goal.position + new Vector3(0f, -1f, 0f), 1f * Time.deltaTime);
+            yield return null;
+
+        }
+
+    }
 }
