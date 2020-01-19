@@ -11,7 +11,15 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartGame();
+        
+    }
+
+    private void Update()
+    {
+        if(Input.anyKeyDown)
+        {
+            StartGame();
+        }
     }
 
     public void StartGame()
