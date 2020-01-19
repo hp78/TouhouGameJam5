@@ -48,12 +48,17 @@ public class MikoBoss : MonoBehaviour
     bool isInvul = false;
     public int bosslife = 10;
 
+    GameController gc;
+
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         prevNumber = 1;
         currState = MikoState.SPIN;
+        gc = GameObject.Find("GameController").GetComponent<GameController>();
+        gc.UpdateBossHealth(bosslife);
 
     }
 
@@ -223,13 +228,13 @@ public class MikoBoss : MonoBehaviour
 
         animator.Play("MikoTable");
 
-        for (i = 0; i < 10; ++i)
+        for (i = 0; i < 8; ++i)
         {
 
-            float ranX = Random.Range(5f, 10f);
+            float ranX = Random.Range(5f, 9f);
             if (rightside)
                 ranX = -ranX;
-            float ranY = Random.Range(5f, 15f);
+            float ranY = Random.Range(5f, 13f);
             Vector2 movement = new Vector3(ranX, ranY, 0f);
             var temp = Instantiate(tablePrefab, transform.position, Quaternion.identity);
             temp.GetComponent<Rigidbody2D>().velocity = movement;
@@ -283,6 +288,8 @@ public class MikoBoss : MonoBehaviour
         currInvulframe = 0.0f;
         isInvul = true;
         --bosslife;
+        gc.UpdateBossHealth(bosslife);
+
         if (bosslife <= 0)
             currState = MikoState.DEAD;
 
@@ -317,7 +324,7 @@ public class MikoBoss : MonoBehaviour
         animator.Play("MikoDead");
         while (goal.position.y > 2f)
         {
-            goal.position = Vector2.MoveTowards(goal.position, goal.position + new Vector3(0f, -1f, 0f), 1f * Time.deltaTime);
+            goal.position = Vector2.MoveTowards(goal.position, goal.position + new Vector3(0f, -1f, 0f), 10f * Time.deltaTime);
             yield return null;
 
         }

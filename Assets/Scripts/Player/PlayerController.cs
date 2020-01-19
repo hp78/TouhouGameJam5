@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     public Sprite still;
     public Sprite succ;
 
+    Transform goal;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +65,8 @@ public class PlayerController : MonoBehaviour
         layermask |= (1 << 9);//enemy
         layermask |= (1 << 10);//camera
         layermask = ~layermask;
+        goal = GameObject.Find("Goal").transform;
+
     }
 
     // Update is called once per frame
@@ -80,6 +83,12 @@ public class PlayerController : MonoBehaviour
             Movement();
             Jump();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            this.transform.position = goal.position;
+        }
+
     }
 
     void Movement()

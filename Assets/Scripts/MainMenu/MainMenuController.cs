@@ -11,7 +11,7 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        JSAM.AudioManager.instance.PlayMusic("MainMenu");
+        JSAM.AudioManager.instance.PlayMusic("Menu");
     }
 
     private void Update()

@@ -56,6 +56,8 @@ public class MeiLingBoss : MonoBehaviour
     bool isInvul = false;
    public  int bosslife = 10;
 
+    GameController gc;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,7 +68,8 @@ public class MeiLingBoss : MonoBehaviour
         anim.Play("MeilingIdle");
         spriteRenderer.sprite = charging;
 
-
+        gc = GameObject.Find("GameController").GetComponent<GameController>();
+        gc.UpdateBossHealth(bosslife);
         rigidbody2d.gravityScale = 0f;
         idleTime = 3f;
         prevState = MeiState.LASER;
@@ -262,6 +265,8 @@ public class MeiLingBoss : MonoBehaviour
         isInvul = true;
 
         --bosslife;
+        gc.UpdateBossHealth(bosslife);
+
         if (bosslife <= 0)
             currState = MeiState.DEAD;
 

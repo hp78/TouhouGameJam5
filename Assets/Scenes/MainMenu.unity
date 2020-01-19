@@ -120,6 +120,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &57845789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 57845790}
+  - component: {fileID: 57845791}
+  m_Layer: 0
+  m_Name: Menu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &57845790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57845789}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2078912105}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &57845791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57845789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3174737d2fa98ca49b89bf9b15228e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  file: {fileID: 8300000, guid: 5bf0eb56b739e184fb999f22bc85a466, type: 3}
+  useLoopPoints: 0
+  loopStart: 0
+  loopEnd: 0
+  loopPointInputMode: 0
+  bpm: 120
 --- !u!1 &200950414
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174737d2fa98ca49b89bf9b15228e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  file: {fileID: 0}
+  file: {fileID: 8300000, guid: 5fde93cf5d0d8e54d9c3227e9f7e3297, type: 3}
   useLoopPoints: 0
   loopStart: 0
   loopEnd: 0
@@ -2878,7 +2927,12 @@ PrefabInstance:
     - target: {fileID: 2133915684049951699, guid: a5622182eb5c80d4090797d80bbf7abc,
         type: 3}
       propertyPath: musicVolume
-      value: 0.508
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133915684049951699, guid: a5622182eb5c80d4090797d80bbf7abc,
+        type: 3}
+      propertyPath: masterVolume
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4502563656087406104, guid: a5622182eb5c80d4090797d80bbf7abc,
         type: 3}

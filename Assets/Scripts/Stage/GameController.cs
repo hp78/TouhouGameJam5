@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour
 
     [Space(8)]
     public Image[] heartsImage;
+    public Image[] bossImage;
     public Image[] succspaceImage;
 
     // Start is called before the first frame update
@@ -189,6 +190,9 @@ public class GameController : MonoBehaviour
              JSAM.AudioManager.instance.PlayMusic("China");
             if (nextStageName == "Stage2-Boss")
                 JSAM.AudioManager.instance.PlayMusic("Miko");
+            if (nextStageName == "Stage3-Boss")
+                JSAM.AudioManager.instance.PlayMusic("Mokou");
+
 
 
         }
@@ -207,6 +211,7 @@ public class GameController : MonoBehaviour
         if (nHealth < 1)
         {
             StartCoroutine(ReloadScene());
+
         }
         else
         {
@@ -218,6 +223,26 @@ public class GameController : MonoBehaviour
             for (int i = nHealth; i < heartsImage.Length; ++i)
             {
                 heartsImage[i].color = Color.black;
+            }
+        }
+    }
+
+    public void UpdateBossHealth(int nHealth)
+    {
+        if (nHealth < 0)
+        {
+            return;
+        }
+        else
+        {
+            for (int i = 0; i < nHealth; ++i)
+            {
+                bossImage[i].color = Color.blue;
+            }
+
+            for (int i = nHealth; i < bossImage.Length; ++i)
+            {
+                bossImage[i].color = Color.black;
             }
         }
     }
