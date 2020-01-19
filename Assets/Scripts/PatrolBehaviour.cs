@@ -27,9 +27,9 @@ public class PatrolBehaviour : MonoBehaviour {
         else
             this.transform.position = Vector2.MoveTowards(this.transform.position, endPoint.position, Time.deltaTime * PatrolSpeed);
 
-        if (this.transform.position == endPoint.position)
+        if (Vector3.Distance(transform.position, endPoint.position) <1f)
             reverse = true;
-        if (this.transform.position == startPoint)
+        if ((Vector3.Distance(transform.position, startPoint) < 1f))
             reverse = false;
 
     }

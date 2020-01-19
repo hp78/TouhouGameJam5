@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Goal
   - Enemy
+  - BulletDestroyer
+  - PlayerBullet
+  - Hazard
   layers:
   - Default
   - TransparentFX

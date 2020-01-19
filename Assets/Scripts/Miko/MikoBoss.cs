@@ -97,7 +97,6 @@ public class MikoBoss : MonoBehaviour
 
     IEnumerator RotateCamera()
     {
-
         int rand = Random.Range(1, 5);
         while(prevNumber == rand)
             rand = Random.Range(1, 5);
@@ -158,8 +157,9 @@ public class MikoBoss : MonoBehaviour
         }
         currState = MikoState.IDLE;
 
-        spriteRenderer.flipX = !rightside;
         animator.CrossFade("MikoIdle", 0.1f);
+        spriteRenderer.flipX = !rightside;
+
         yield return new WaitForSeconds(2f);
 
 
@@ -168,16 +168,23 @@ public class MikoBoss : MonoBehaviour
         else
         {
             float randbool = Random.Range(0.0f, 1f);
-            if (randbool <= 0.2f)
+            if (randbool <= 0.15f)
                 currState = MikoState.TABLE;
             else
+            {
+                animator.Play("MikoFlip");
+                yield return new WaitForSeconds(1f);
+
                 currState = MikoState.ROTATECAM;
+            }
         }
     }
 
     IEnumerator Throw()
     {
         int i;
+        animator.Play("MikoTable");
+
         for (i = 0; i < 20; ++i)
         {
 
@@ -192,6 +199,8 @@ public class MikoBoss : MonoBehaviour
 
             yield return new WaitForSeconds(0.25f);
         }
+        animator.CrossFade("MikoIdle", 0.1f);
+
         yield return new WaitForSeconds(2f);
         currState = MikoState.SPIN;
         yield return 0;
