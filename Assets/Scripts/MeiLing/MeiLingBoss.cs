@@ -52,7 +52,7 @@ public class MeiLingBoss : MonoBehaviour
     float invulFrameMax = 0.5f;
     float currInvulframe = 0.0f;
     bool isInvul = false;
-    int bosslife = 10;
+   public  int bosslife = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -246,7 +246,7 @@ public class MeiLingBoss : MonoBehaviour
     }
 
 
-    IEnumerator ReceiveDamage()
+    public IEnumerator ReceiveDamage()
     {
         currInvulframe = 0.0f;
         isInvul = true;
@@ -267,6 +267,9 @@ public class MeiLingBoss : MonoBehaviour
         }
 
         spriteRenderer.color = Color.white;
+        --bosslife;
+        if (bosslife < 0)
+            currState = MeiState.DEAD;
         isInvul = false;
     }
 
@@ -278,15 +281,14 @@ public class MeiLingBoss : MonoBehaviour
             if (!isInvul)
             {
                 StartCoroutine(ReceiveDamage());
-                --bosslife;
             }
-            if (bosslife < 0)
-                currState = MeiState.DEAD;
+
 
         }
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerController>().DamagePlayer();
+            if (collision.transform.position.y - 1.2f < transform.position.y)
+                collision.GetComponent<PlayerController>().DamagePlayer();
         }
     }
 

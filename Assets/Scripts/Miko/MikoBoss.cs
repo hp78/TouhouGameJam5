@@ -41,8 +41,10 @@ public class MikoBoss : MonoBehaviour
     int prevNumber;
 
 
-    float idleTime;
-    float spinTime;
+    float invulFrameMax = 1f;
+    float currInvulframe = 0.0f;
+    bool isInvul = false;
+    public int bosslife = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -117,12 +119,14 @@ public class MikoBoss : MonoBehaviour
         }
         prevNumber = rand;
         yield return new WaitForSeconds(3f);
-        float randbool = Random.Range(0.0f, 1f);
-        if (randbool <= 0.5f)
-            currState = MikoState.TABLE;
-        else
-            currState = MikoState.SPIN;
-
+        if (currState != MikoState.DEAD)
+        {
+            float randbool = Random.Range(0.0f, 1f);
+            if (randbool <= 0.5f)
+                currState = MikoState.TABLE;
+            else
+                currState = MikoState.SPIN;
+        }
         yield return 0;
     }
 
@@ -131,7 +135,7 @@ public class MikoBoss : MonoBehaviour
         animator.Play("MikoSpin");
         for(spinCount = 0; spinCount <5; spinCount++)
         {
-            float ranY = Random.Range(-2f, 2f);
+            float ranY = Random.Range(-2f, 1f);
             while(!reached)
             {
                 if (rightside)
@@ -162,20 +166,22 @@ public class MikoBoss : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-
-        if (prevState == MikoState.ROTATECAM)
-            currState = MikoState.TABLE;
-        else
+        if (currState != MikoState.DEAD)
         {
-            float randbool = Random.Range(0.0f, 1f);
-            if (randbool <= 0.15f)
+            if (prevState == MikoState.ROTATECAM)
                 currState = MikoState.TABLE;
             else
             {
-                animator.Play("MikoFlip");
-                yield return new WaitForSeconds(1f);
-
-                currState = MikoState.ROTATECAM;
+                float randbool = Random.Range(0.0f, 1f);
+                if (randbool <= 0.15f)
+                    currState = MikoState.TABLE;
+                else
+                {
+                    animator.Play("MikoFlip");
+                    yield return new WaitForSeconds(1f);
+                    if (currState != MikoState.DEAD)
+                        currState = MikoState.ROTATECAM;
+                }
             }
         }
     }
@@ -183,26 +189,51 @@ public class MikoBoss : MonoBehaviour
     IEnumerator Throw()
     {
         int i;
+        while (!reached)
+        {
+            if (!rightside)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, leftSide.position + new Vector3(0f, -4.5f, 0f), floatSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, leftSide.position + new Vector3(0f, -4.5f, 0f)) < 0.1f)
+                {
+                    reached = true;
+                }
+            }
+            else
+            {
+                transform.position = Vector2.MoveTowards(transform.position, rightSide.position + new Vector3(0f, -4.5f, 0f), floatSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, rightSide.position + new Vector3(0f, -4.5f, 0f)) < 0.1f)
+                {
+                    reached = true;
+                }
+            }
+            yield return null;
+        }
+        reached = false;
+
+        yield return new WaitForSeconds(1f);
+
         animator.Play("MikoTable");
 
-        for (i = 0; i < 20; ++i)
+        for (i = 0; i < 10; ++i)
         {
 
-            float ranX = Random.Range(1f, 12f);
+            float ranX = Random.Range(5f, 10f);
             if (rightside)
                 ranX = -ranX;
-            float ranY = Random.Range(10f, 15f);
+            float ranY = Random.Range(5f, 15f);
             Vector2 movement = new Vector3(ranX, ranY, 0f);
             var temp = Instantiate(tablePrefab, transform.position, Quaternion.identity);
             temp.GetComponent<Rigidbody2D>().velocity = movement;
             
 
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.50f);
         }
         animator.CrossFade("MikoIdle", 0.1f);
 
         yield return new WaitForSeconds(2f);
-        currState = MikoState.SPIN;
+        if (currState != MikoState.DEAD)
+            currState = MikoState.SPIN;
         yield return 0;
 
     }
@@ -211,12 +242,59 @@ public class MikoBoss : MonoBehaviour
         if(bulletCD < 0.0f)
         {
             float i;
-            for (i = 0.0f; i > -360f; i -= 36f)
+            for (i = 0.0f; i > -360f; i -= 120)
             {
-                Instantiate(RanBullet, transform.position, Quaternion.Euler(0f, 0f, i));
+                Instantiate(RanBullet, transform.position, Quaternion.Euler(0f, 0f, i+60));
             }
             bulletCD = 0.5f;
         }
         bulletCD -= Time.deltaTime;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "PlayerBullet")
+        {
+            Destroy(collision.gameObject);
+            if (!isInvul)
+            {
+                StartCoroutine(ReceiveDamage());
+            }
+
+
+        }
+        if (collision.CompareTag("Player"))
+        {
+            if (collision.transform.position.y - 1.2f < transform.position.y)
+                collision.GetComponent<PlayerController>().DamagePlayer();
+        }
+    }
+
+    public IEnumerator ReceiveDamage()
+    {
+        currInvulframe = 0.0f;
+        isInvul = true;
+
+        while (currInvulframe < invulFrameMax)
+        {
+            spriteRenderer.color = Color.red;
+
+            yield return new WaitForSeconds(0.1f);
+
+            currInvulframe += 0.1f;
+
+            spriteRenderer.color = Color.black;
+
+            yield return new WaitForSeconds(0.05f);
+
+            currInvulframe += 0.05f;
+        }
+
+        spriteRenderer.color = Color.white;
+        --bosslife;
+        if (bosslife < 0)
+            currState = MikoState.DEAD;
+        isInvul = false;
+    }
+
 }

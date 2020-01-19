@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2055818392097723707}
   - component: {fileID: 2055818392097723706}
   - component: {fileID: 2055818392097723705}
+  - component: {fileID: -5217067769903937065}
+  - component: {fileID: 7768564485801807353}
   m_Layer: 0
   m_Name: Table
   m_TagString: Untagged
@@ -117,7 +119,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2.5
+  m_GravityScale: 1.75
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -139,3 +141,29 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.66666687
+--- !u!114 &-5217067769903937065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055818392097723704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80261717484bfdd4c811124acd723bcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEdible: 1
+--- !u!114 &7768564485801807353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055818392097723704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2646b5efd4235e409b480b0e7de2479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
