@@ -146,6 +146,7 @@ public class GameController : MonoBehaviour
     //
     public void RetryScene()
     {
+        isGamePaused.val = false;
         SceneManager.LoadScene(stageNames.values[currStageIndex.val]);
     }
 
@@ -202,6 +203,7 @@ public class GameController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        isGamePaused.val = false;
         SceneManager.LoadScene("MainMenu");
     }
 
