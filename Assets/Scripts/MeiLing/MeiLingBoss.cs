@@ -49,6 +49,10 @@ public class MeiLingBoss : MonoBehaviour
     float bounceTime;
     float idleTime;
 
+    float invulFrameMax = 0.5f;
+    float currInvulframe = 0.0f;
+    bool isInvul = false;
+    int bosslife = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -100,18 +104,21 @@ public class MeiLingBoss : MonoBehaviour
         Hopping();
         if (bounceTime < 0.0f)
         {
-            if(prevState == MeiState.LASER)
+            if (currState != MeiState.DEAD)
             {
-                prevState = currState = MeiState.DROP;
-            }
-            else
-            {
-                prevState = currState = MeiState.LASER;
-            }
-            anim.CrossFade("MeilingIdle", .3f);
+                if (prevState == MeiState.LASER)
+                {
+                    prevState = currState = MeiState.DROP;
+                }
+                else
+                {
+                    prevState = currState = MeiState.LASER;
+                }
+                anim.CrossFade("MeilingIdle", .3f);
 
-            rigidbody2d.velocity = new Vector2 (0f,0f);
-            rigidbody2d.gravityScale = 0f;
+                rigidbody2d.velocity = new Vector2(0f, 0f);
+                rigidbody2d.gravityScale = 0f;
+            }
         }
 
         bounceTime -= Time.deltaTime;
@@ -125,9 +132,12 @@ public class MeiLingBoss : MonoBehaviour
             spriteRenderer.sprite = spin;
             tails.SetActive(false);
             anim.Play("MeilingSpin");
-            currState = MeiState.BOUNCE;
-            rigidbody2d.gravityScale = 2.5f;
-            bounceTime = 5f;
+            if (currState != MeiState.DEAD)
+            {
+                currState = MeiState.BOUNCE;
+                rigidbody2d.gravityScale = 2.5f;
+                bounceTime = 5f;
+            }
 
         }
     }
@@ -234,4 +244,52 @@ public class MeiLingBoss : MonoBehaviour
         yield return 0;
 
     }
+
+
+    IEnumerator ReceiveDamage()
+    {
+        currInvulframe = 0.0f;
+        isInvul = true;
+
+        while (currInvulframe < invulFrameMax)
+        {
+            spriteRenderer.color = Color.red;
+
+            yield return new WaitForSeconds(0.1f);
+
+            currInvulframe += 0.1f;
+
+            spriteRenderer.color = Color.black;
+
+            yield return new WaitForSeconds(0.05f);
+
+            currInvulframe += 0.05f;
+        }
+
+        spriteRenderer.color = Color.white;
+        isInvul = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "PlayerBullet")
+        {
+            Destroy(collision.gameObject);
+            if (!isInvul)
+            {
+                StartCoroutine(ReceiveDamage());
+                --bosslife;
+            }
+            if (bosslife < 0)
+                currState = MeiState.DEAD;
+
+        }
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerController>().DamagePlayer();
+        }
+    }
+
+
+
 }
