@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
 
     [Space(5)]
+    bool isPlayerInvul = false;
+    float invulFrameMax = 0.5f;
+    float currInvulframe = 0.0f;
+
+    [Space(5)]
     public float jumpThreshold;
 
     public bool inAir;
@@ -43,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     [Space(5)]
     public GameObject spriteBody;
+    public SpriteRenderer trueSprite;
     public Sprite still;
     public Sprite succ;
 
@@ -163,13 +169,43 @@ public class PlayerController : MonoBehaviour
 
     public void DamagePlayer()
     {
+        if (isPlayerInvul) return;
+
         --currHealth;
 
         if(currHealth < 1)
         {
             isPlayerAlive.val = false;
         }
+        else
+        {
+            StartCoroutine(ReceiveDamage());
+        }
         evntUpdateHealth?.Invoke(currHealth);
+    }
+
+    IEnumerator ReceiveDamage()
+    {
+        currInvulframe = 0.0f;
+        isPlayerInvul = true;
+
+        while (currInvulframe < invulFrameMax)
+        {
+            trueSprite.color = Color.red;
+
+            yield return new WaitForSeconds(0.1f);
+
+            currInvulframe += 0.1f;
+
+            trueSprite.color = Color.black;
+
+            yield return new WaitForSeconds(0.05f);
+
+            currInvulframe += 0.05f;
+        }
+
+        trueSprite.color = Color.white;
+        isPlayerInvul = false;
     }
 
     public void HealPlayer()

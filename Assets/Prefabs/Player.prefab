@@ -111,7 +111,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5054,7 +5054,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -9891,6 +9891,8 @@ MonoBehaviour:
   isPlayerSuccing: {fileID: 11400000, guid: 308a518564bada94d8b544094659c523, type: 2}
   isGamePaused: {fileID: 11400000, guid: 524ebda08f0160243a2ef7862160639f, type: 2}
   isPlayerFacingLeft: {fileID: 11400000, guid: cabc791cc8ab0444d86e8b9c93a3b86e, type: 2}
+  isPlayerAlive: {fileID: 11400000, guid: a7da1d4569a9cd644b34983a9b95d879, type: 2}
+  isPlayerInControl: {fileID: 11400000, guid: 7f013bcb6390a9445a8a80055e676d21, type: 2}
   succEffects: {fileID: 622146806639378989}
   moveForce: 10
   jumpForce: 14
@@ -9903,6 +9905,7 @@ MonoBehaviour:
   unsuck1effect: {fileID: 622146804881607603}
   unsuck2effect: {fileID: 622146806862575968}
   spriteBody: {fileID: 622146805851561749}
+  trueSprite: {fileID: 350629437356062723}
   still: {fileID: 21300000, guid: 65bb915a7ad2fa44985e3b36e925e2b0, type: 3}
   succ: {fileID: 21300000, guid: 978398f3744a70e40bd6a7f69bd2ff27, type: 3}
 --- !u!114 &622146806508622136
@@ -10069,7 +10072,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -14898,7 +14901,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1

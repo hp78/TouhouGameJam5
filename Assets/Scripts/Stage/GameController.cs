@@ -48,6 +48,13 @@ public class GameController : MonoBehaviour
     }
 
     //
+    void StageStart()
+    {
+        isPlayerAlive.val = true; ;
+        isPlayerInControl.val = true; ;
+    }
+
+    //
     public void StageEnd()
     {
         isPlayerInControl.val = false;
@@ -57,14 +64,17 @@ public class GameController : MonoBehaviour
     IEnumerator FadeIntoScene()
     {
         float currAlpha = 1.0f;
-        Time.timeScale = 1.0f;
+        Time.timeScale = 0.0f;
 
         while (currAlpha > 0.0f)
         {
-            currAlpha -= Time.deltaTime;
+            currAlpha -= Time.unscaledDeltaTime;
             blackout.color = new Color(0, 0, 0, currAlpha);
             yield return null;
         }
+
+        Time.timeScale = 1.0f;
+        StageStart();
     }
 
     IEnumerator LoadIntoNextScene()

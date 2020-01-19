@@ -641,7 +641,7 @@ PrefabInstance:
     - target: {fileID: 622146805879302513, guid: 300da272b92e1704b9e592b121833248,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000002682209
+      value: 0.00000029802322
       objectReference: {fileID: 0}
     - target: {fileID: 622146805879302513, guid: 300da272b92e1704b9e592b121833248,
         type: 3}
@@ -1059,13 +1059,26 @@ GameObject:
   - component: {fileID: 6550072258105746009}
   - component: {fileID: 3454210438652997404}
   - component: {fileID: 3156117748444106475}
+  - component: {fileID: 1544939257463551736}
   m_Layer: 0
-  m_Name: GroundTileGeneric (9)
+  m_Name: HazardTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1544939257463551736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544939257463551735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b889715fd45c3544c95f04a731a97435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3156117748444106475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1125,7 +1138,7 @@ PrefabInstance:
     - target: {fileID: 4555499917542809674, guid: 608541f2c0e8e9b4dac8a91791f0ade9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4555499917542809674, guid: 608541f2c0e8e9b4dac8a91791f0ade9,
         type: 3}
