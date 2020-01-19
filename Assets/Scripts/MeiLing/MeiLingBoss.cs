@@ -65,7 +65,9 @@ public class MeiLingBoss : MonoBehaviour
         currState = MeiState.IDLE;
         anim.Play("MeilingIdle");
         spriteRenderer.sprite = charging;
-        
+        JSAM.AudioManager.instance.PlayMusic("China");
+
+
         rigidbody2d.gravityScale = 0f;
         idleTime = 3f;
         prevState = MeiState.LASER;
@@ -210,7 +212,7 @@ public class MeiLingBoss : MonoBehaviour
         }
 
         float i;
-        for(i = 0.0f; i>-360f; i-=18f)
+        for(i = 0.0f; i>-360f; i-=36f)
         {
             Instantiate(laserPrefab, transform.position, Quaternion.Euler(0f, 0f, i));
             Instantiate(laserPrefab, transform.position, Quaternion.Euler(0f, 0f, -i+180f));
