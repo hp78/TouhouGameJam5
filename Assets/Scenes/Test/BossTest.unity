@@ -3691,6 +3691,13 @@ MonoBehaviour:
   snakeParent: {fileID: 1113390071}
   snakeWave: []
   snakes: {fileID: 2074700648}
+  zzzL: {fileID: 0}
+  zzzR: {fileID: 0}
+  goomba: {fileID: 0}
+  anim: {fileID: 0}
+  goal: {fileID: 0}
+  isInvul: 0
+  bosslife: 10
 --- !u!4 &1385487849
 Transform:
   m_ObjectHideFlags: 0

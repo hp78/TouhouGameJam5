@@ -54,6 +54,8 @@ public class MikoBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         prevNumber = 1;
         currState = MikoState.SPIN;
+        JSAM.AudioManager.instance.PlayMusic("Miko");
+
     }
 
     // Update is called once per frame

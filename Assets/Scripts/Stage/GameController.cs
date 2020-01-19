@@ -182,6 +182,9 @@ public class GameController : MonoBehaviour
         if ((currStageIndex.val) < stageNames.values.Length)
         {
             nextStageName = stageNames.values[currStageIndex.val];
+            if(nextStageName == "Stage2-1" || nextStageName == "Stage3-1")
+                JSAM.AudioManager.instance.PlayMusic("Keine");
+
         }
 
         SceneManager.LoadScene(nextStageName);
