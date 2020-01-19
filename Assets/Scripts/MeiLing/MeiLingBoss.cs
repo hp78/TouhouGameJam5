@@ -65,7 +65,6 @@ public class MeiLingBoss : MonoBehaviour
         currState = MeiState.IDLE;
         anim.Play("MeilingIdle");
         spriteRenderer.sprite = charging;
-        JSAM.AudioManager.instance.PlayMusic("China");
 
 
         rigidbody2d.gravityScale = 0f;
