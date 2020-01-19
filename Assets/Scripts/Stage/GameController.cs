@@ -185,6 +185,12 @@ public class GameController : MonoBehaviour
             if(nextStageName == "Stage2-1" || nextStageName == "Stage3-1")
                 JSAM.AudioManager.instance.PlayMusic("Keine");
 
+            if (nextStageName == "Stage1-Boss") 
+             JSAM.AudioManager.instance.PlayMusic("China");
+            if (nextStageName == "Stage2-Boss")
+                JSAM.AudioManager.instance.PlayMusic("Miko");
+
+
         }
 
         SceneManager.LoadScene(nextStageName);
