@@ -29,6 +29,9 @@ public class GameController : MonoBehaviour
     //
     public Image blackout;
 
+    //
+    public GameObject pausePanel;
+
     [Space(8)]
     public Image[] heartsImage;
     public Image[] succspaceImage;
@@ -48,6 +51,14 @@ public class GameController : MonoBehaviour
         cinemVCamCinematic.Follow = goal.transform;
 
         StartCoroutine(FadeIntoScene());
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
     }
 
     void OnEnable()
@@ -130,10 +141,37 @@ public class GameController : MonoBehaviour
         LoadNextScene();
     }
 
+
     //
     public void RetryScene()
     {
         SceneManager.LoadScene(stageNames.values[currStageIndex.val]);
+    }
+
+    void TogglePause()
+    {
+        if(isGamePaused.val)
+        {
+            UnpauseGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0.0f;
+        pausePanel.SetActive(true);
+        isGamePaused.val = true;
+    }
+
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1.0f;
+        pausePanel.SetActive(false);
+        isGamePaused.val = false;
     }
 
     //
