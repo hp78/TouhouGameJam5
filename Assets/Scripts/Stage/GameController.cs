@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class GameController : MonoBehaviour
 {
+    //
+    public PlayerController player;
+    public GameObject goal;
+
+    public CinemachineVirtualCamera cinemVCam;
+    public CinemachineVirtualCamera cinemVCamCinematic;
+
     //
     public StringSet stageNames;
     public IntVal currStageIndex;
@@ -33,6 +41,10 @@ public class GameController : MonoBehaviour
             Destroy(instance);
 
         instance = this;
+
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        goal = GameObject.Find("Goal");
+
         StartCoroutine(FadeIntoScene());
     }
 
@@ -65,7 +77,8 @@ public class GameController : MonoBehaviour
     IEnumerator FadeIntoScene()
     {
         float currAlpha = 1.0f;
-        Time.timeScale = 0.0f;
+
+        cinemVCamCinematic.gameObject.SetActive(true);
 
         while (currAlpha > 0.0f)
         {
@@ -74,7 +87,12 @@ public class GameController : MonoBehaviour
             yield return null;
         }
 
-        Time.timeScale = 1.0f;
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        cinemVCamCinematic.gameObject.SetActive(false);
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
         StageStart();
     }
 
