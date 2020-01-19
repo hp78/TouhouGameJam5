@@ -45,6 +45,8 @@ public class GameController : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerController>();
         goal = GameObject.Find("Goal");
 
+        cinemVCamCinematic.Follow = goal.transform;
+
         StartCoroutine(FadeIntoScene());
     }
 
@@ -80,6 +82,8 @@ public class GameController : MonoBehaviour
 
         cinemVCamCinematic.gameObject.SetActive(true);
 
+        Time.timeScale = 0.0f;
+
         while (currAlpha > 0.0f)
         {
             currAlpha -= Time.unscaledDeltaTime;
@@ -91,7 +95,9 @@ public class GameController : MonoBehaviour
 
         cinemVCamCinematic.gameObject.SetActive(false);
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(1.1f);
+
+        Time.timeScale = 1.0f;
 
         StageStart();
     }

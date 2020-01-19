@@ -9,7 +9,6 @@ public class HazardTile : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerController>().DamagePlayer();
-            Debug.Log("Dmg");
         }
     }
 }

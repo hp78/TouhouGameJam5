@@ -792,6 +792,46 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d12689f775529ae41be4e01bf3d9c229, type: 3}
+--- !u!1 &1265391037 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 622146805879302541, guid: 300da272b92e1704b9e592b121833248,
+    type: 3}
+  m_PrefabInstance: {fileID: 1679821620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1265391041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265391037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1274556354 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1442864379425756646, guid: d12689f775529ae41be4e01bf3d9c229,
@@ -1318,16 +1358,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.5646677
-      objectReference: {fileID: 0}
-    - target: {fileID: 813431660984901238, guid: ba6cf152624402b4e9c164a748bfe825,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.4864602
-      objectReference: {fileID: 0}
-    - target: {fileID: 813431660984901238, guid: ba6cf152624402b4e9c164a748bfe825,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.3203125
       objectReference: {fileID: 0}
     - target: {fileID: 813431660984901239, guid: ba6cf152624402b4e9c164a748bfe825,
         type: 3}

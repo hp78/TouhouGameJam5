@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a4fa8968d19eb469461ee99e2ee068, type: 3}
   m_Name: CurrentStageIndex
   m_EditorClassIdentifier: 
-  val: 0
+  val: 3
